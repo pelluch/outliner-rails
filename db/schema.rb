@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20141028194824) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "sections", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -25,7 +22,7 @@ ActiveRecord::Schema.define(version: 20141028194824) do
     t.text     "content"
   end
 
-  add_index "sections", ["index"], name: "index_sections_on_index", using: :btree
-  add_index "sections", ["parent_id"], name: "index_sections_on_parent_id", using: :btree
+  add_index "sections", ["index"], name: "index_sections_on_index"
+  add_index "sections", ["parent_id"], name: "index_sections_on_parent_id"
 
 end
