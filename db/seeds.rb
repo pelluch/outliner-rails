@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Section.create([
+Outline.create([
 	{ id: 100, name: "Principal", index: 0 },
 	{ id: 200, name: "Sub1", parent_id: 100, index: 0},
 	{ id: 300, name: "Sub2", parent_id: 100, index: 1},

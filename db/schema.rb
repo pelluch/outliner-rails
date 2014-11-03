@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028194824) do
+ActiveRecord::Schema.define(version: 20141103023701) do
 
-  create_table "sections", force: true do |t|
+  create_table "outlines", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20141028194824) do
     t.text     "content"
   end
 
-  add_index "sections", ["index"], name: "index_sections_on_index"
-  add_index "sections", ["parent_id"], name: "index_sections_on_parent_id"
+  add_index "outlines", ["index"], name: "index_outlines_on_index"
+  add_index "outlines", ["parent_id"], name: "index_outlines_on_parent_id"
 
 end

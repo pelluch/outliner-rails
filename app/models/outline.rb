@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sections
+# Table name: outlines
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
@@ -8,16 +8,17 @@
 #  updated_at :datetime
 #  parent_id  :integer
 #  index      :integer
+#  content    :text
 #
 
-class Section < ActiveRecord::Base
+class Outline < ActiveRecord::Base
 
 	default_scope { order(index: :asc) }
 	scope :root, -> { where(parent_id: nil) }
 	validates_uniqueness_of :index, scope: :parent_id
 
-	has_many :children, foreign_key: :parent_id, class_name: :"Section", dependent: :destroy
-	belongs_to :parent, foreign_key: :parent_id, class_name: :"Section"
+	has_many :children, foreign_key: :parent_id, class_name: :"Outline", dependent: :destroy
+	belongs_to :parent, foreign_key: :parent_id, class_name: :"Outline"
 	validates_presence_of :name
 	
 	before_validation :check_index
@@ -32,7 +33,7 @@ class Section < ActiveRecord::Base
 
 			if moved_brother.present?
 				if changed_attributes.key? :parent_id
-					old_brothers = Section.where(parent_id: changed_attributes[:parent_id])
+					old_brothers = Outline.where(parent_id: changed_attributes[:parent_id])
 					brothers.where("index >= ?", new_index).each do |brother|
 						brother.update_attribute :index, brother.index + 1
 					end
@@ -55,7 +56,7 @@ class Section < ActiveRecord::Base
 	end
 
 	def siblings
-		Section.where(parent_id: self.parent_id).where.not(id: self.id)
+		Outline.where(parent_id: self.parent_id).where.not(id: self.id)
 	end
 
 	def children_ids
@@ -63,13 +64,13 @@ class Section < ActiveRecord::Base
 	end
 
 	def depth
-		section_depth = 0
+		outline_depth = 0
 		current_parent = self.parent
 		while current_parent.present?
-			section_depth = section_depth + 1
+			outline_depth = outline_depth + 1
 			current_parent = current_parent.parent
 		end
-		section_depth
+		outline_depth
 	end
 
 end
